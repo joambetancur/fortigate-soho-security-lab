@@ -142,6 +142,8 @@ end
 ````
 📊 Verificación y Resultados (Evidencias): Todo queda registrado en la carpeta **images**:
 ![Tabla de Politicas](images/politics1.jpg)
+![Tabla de Politicas](images/politics2.jpg)
+![Registro del Trafico](images/log_traffic.jpg)
 *Nota de ingeniería: Debido a limitaciones de hardware para desplegar hosts finales en el hipervisor, las pruebas de conectividad se originaron directamente desde la CLI de FortiOS forzando las IPs de las interfaces como origen (`ping-options source`). Por arquitectura del sistema operativo, estas trazas se auditan bajo el módulo **Local Traffic**, demostrando el correcto enrutamiento y la aplicación de las políticas perimetrales:*
 
 📌 Conclusiones del Laboratorio
