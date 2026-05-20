@@ -26,3 +26,35 @@ El laboratorio se compone de tres segmentos de red lógicos conectados directame
             |        +--- [ Servidor Web DMZ ] (172.16.10.10:80)
             |
     [ Usuarios LAN ] (192.168.10.0/24)
+
+# Configuración de Interfaz WAN
+config system interface
+    edit "port1"
+        set alias "WAN"
+        set mode dhcp
+        set role wan
+        set allowaccess ping https
+    next
+end
+
+# Configuración de Interfaz LAN
+config system interface
+    edit "port2"
+        set alias "LAN_Users"
+        set mode static
+        set ip 192.168.10.1 255.255.255.0
+        set role lan
+        set allowaccess ping https ssh
+    next
+end
+
+# Configuración de Interfaz DMZ
+config system interface
+    edit "port3"
+        set alias "Web_Server_DMZ"
+        set mode static
+        set ip 172.16.10.1 255.255.255.0
+        set role dmz
+        set allowaccess ping
+    next
+end
