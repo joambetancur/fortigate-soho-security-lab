@@ -28,7 +28,7 @@ El laboratorio se compone de tres segmentos de red lógicos conectados directame
     [ Usuarios LAN ] (192.168.10.0/24)
 
 ````
-##⚙️ Configuración Paso a Paso (CLI de Referencia)
+## ⚙️ Configuración Paso a Paso (CLI de Referencia)
 1. Inicialización y Direccionamiento de Interfaces
 Configuración manual de los roles y direccionamiento IP para garantizar que el tráfico fluya exclusivamente por las interfaces correctas.
 ````
