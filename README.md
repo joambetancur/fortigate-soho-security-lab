@@ -141,10 +141,15 @@ config firewall policy
 end
 ````
 📊 Verificación y Resultados (Evidencias): Todo queda registrado en la carpeta **images**:
+
+#### A. Tabla de Políticas de Seguridad (GUI)
+A continuación se muestra la correcta jerarquía y estado de las políticas configuradas desde el entorno gráfico de FortiOS:
 ![Tabla de Politicas](images/politics1.jpg)
 ![Tabla de Politicas](images/politics2.jpg)
-![Registro del Trafico](images/log_traffic.jpg)
+
+#### B. Monitoreo de Logs y Tráfico mediante CLI (Local Traffic)
 *Nota de ingeniería: Debido a limitaciones de hardware para desplegar hosts finales en el hipervisor, las pruebas de conectividad se originaron directamente desde la CLI de FortiOS forzando las IPs de las interfaces como origen (`ping-options source`). Por arquitectura del sistema operativo, estas trazas se auditan bajo el módulo **Local Traffic**, demostrando el correcto enrutamiento y la aplicación de las políticas perimetrales:*
+![Registro del Trafico](images/log_traffic.jpg)
 
 📌 Conclusiones del Laboratorio
 Control Perimetral: El uso de las políticas NGFW segmentó exitosamente la red, impidiendo la comunicación directa no deseada entre la zona de usuarios y la zona de servidores.
