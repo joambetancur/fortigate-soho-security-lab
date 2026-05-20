@@ -140,7 +140,8 @@ config firewall policy
     next
 end
 ````
-📊 Verificación y Resultados (Evidencias): Todo queda registrado en la carpeta **images**
+📊 Verificación y Resultados (Evidencias): Todo queda registrado en la carpeta **images**:
+*Nota de ingeniería: Debido a limitaciones de hardware para desplegar hosts finales en el hipervisor, las pruebas de conectividad se originaron directamente desde la CLI de FortiOS forzando las IPs de las interfaces como origen (`ping-options source`). Por arquitectura del sistema operativo, estas trazas se auditan bajo el módulo **Local Traffic**, demostrando el correcto enrutamiento y la aplicación de las políticas perimetrales:*
 
 📌 Conclusiones del Laboratorio
 Control Perimetral: El uso de las políticas NGFW segmentó exitosamente la red, impidiendo la comunicación directa no deseada entre la zona de usuarios y la zona de servidores.
