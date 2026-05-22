@@ -151,7 +151,7 @@ A continuación se muestra la correcta jerarquía y estado de las políticas con
 *Nota de ingeniería: Debido a limitaciones de hardware para desplegar hosts finales en el hipervisor, las pruebas de conectividad se originaron directamente desde la CLI de FortiOS forzando las IPs de las interfaces como origen (`ping-options source`). Por arquitectura del sistema operativo, estas trazas se auditan bajo el módulo **Local Traffic**, demostrando el correcto enrutamiento y la aplicación de las políticas perimetrales:*
 ![Registro del Trafico](images/log_traffic.jpg)
 
-📌 Conclusiones del Laboratorio
+📌 Conclusiones del Laboratorio 1:
 Control Perimetral: El uso de las políticas NGFW segmentó exitosamente la red, impidiendo la comunicación directa no deseada entre la zona de usuarios y la zona de servidores.
 
 Seguridad DMZ: Al utilizar una IP Virtual (VIP), se expone únicamente el puerto específico necesario (TCP 80) hacia internet, ocultando por completo el direccionamiento IP real de la infraestructura interna de ataques de escaneo.
@@ -164,7 +164,7 @@ En esta fase se transformó el firewall perimetral básico en un **Firewall de N
 ### ⚙️ Configuración de Perfiles UTM (Arquitectura)
 
 #### 1. Filtrado Web (Web Filter)
-Se creó el perfil personalizado `WF_LAN_Corporativo` bajo la base de datos de **FortiGuard**, aplicando políticas de bloqueo estricto a las categorías de **Gambling (Apuestas)** y **Security Risks (Phishing/Spam)** para mitigar vectores de ataque iniciales.
+Se creó el perfil personalizado `WF_LAN_Corporativo` bajo la base de datos de **FortiGuard**, aplicando políticas de bloqueo estricto a las categorías de **Adult/Mature Content** para evitar contenido no deseado o de alto impacto.
 
 ![Perfil Web Filter](images/perfil_web.jpg)
 
