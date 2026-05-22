@@ -155,3 +155,31 @@ A continuación se muestra la correcta jerarquía y estado de las políticas con
 Control Perimetral: El uso de las políticas NGFW segmentó exitosamente la red, impidiendo la comunicación directa no deseada entre la zona de usuarios y la zona de servidores.
 
 Seguridad DMZ: Al utilizar una IP Virtual (VIP), se expone únicamente el puerto específico necesario (TCP 80) hacia internet, ocultando por completo el direccionamiento IP real de la infraestructura interna de ataques de escaneo.
+
+## 🛡️ Laboratorio 2: Perfiles de Seguridad y Control de Aplicaciones (NGFW)
+
+### 📝 Descripción
+En esta fase se transformó el firewall perimetral básico en un **Firewall de Nueva Generación (NGFW)** mediante la implementación de inspección de Capa 7. El objetivo fue aplicar el principio de menor privilegio sobre la regla de salida a Internet (`Permitir_LAN_a_Internet`), restringiendo el acceso a categorías web de alto riesgo y controlando el uso de aplicaciones que comprometen la productividad y el ancho de banda.
+
+### ⚙️ Configuración de Perfiles UTM (Arquitectura)
+
+#### 1. Filtrado Web (Web Filter)
+Se creó el perfil personalizado `WF_LAN_Corporativo` bajo la base de datos de **FortiGuard**, aplicando políticas de bloqueo estricto a las categorías de **Gambling (Apuestas)** y **Security Risks (Phishing/Spam)** para mitigar vectores de ataque iniciales.
+
+![Perfil Web Filter](images/perfil_web.png)
+
+#### 2. Control de Aplicaciones (Application Control)
+Mediante el análisis de firmas profundas de Capa 7, se desplegó el perfil `AC_LAN_Corporativo` para interceptar y denegar de forma heurística el tráfico de las categorías **Social.Media** (firmas de Facebook, Instagram, TikTok) y herramientas **P2P** (descargas BitTorrent), previniendo la fuga de información y el abuso del canal de datos.
+
+![Perfil Application Control](images/perfil_apps.png)
+
+### 🔗 Vinculación y Motores de Inspección en la Política
+Ambos escudos de seguridad fueron acoplados directamente dentro de la política de firewall principal. Para asegurar la continuidad del laboratorio sin alteración de llaves criptográficas en esta etapa, se asoció el método de inspección en modo **Certificate Inspection**:
+
+![Política NGFW Acoplada](images/politica_ngfw.png)
+
+---
+
+## 📌 Conclusiones del Laboratorio 2
+* **Seguridad de Capa 7:** La activación de perfiles UTM demuestra que el firewall ya no solo inspecciona IPs y puertos (Capas 3 y 4), sino que analiza el comportamiento real del tráfico y el contenido de las peticiones.
+* **Mitigación del Riesgo:** El bloqueo preventivo de categorías de reputación no deseada disminuye la superficie de ataque de la red SOHO de manera drástica, aislando los endpoints de servidores de comando y control (C2) o sitios de phishing conocidos.
