@@ -166,17 +166,17 @@ En esta fase se transformó el firewall perimetral básico en un **Firewall de N
 #### 1. Filtrado Web (Web Filter)
 Se creó el perfil personalizado `WF_LAN_Corporativo` bajo la base de datos de **FortiGuard**, aplicando políticas de bloqueo estricto a las categorías de **Gambling (Apuestas)** y **Security Risks (Phishing/Spam)** para mitigar vectores de ataque iniciales.
 
-![Perfil Web Filter](images/perfil_web.png)
+![Perfil Web Filter](images/perfil_web.jpg)
 
 #### 2. Control de Aplicaciones (Application Control)
 Mediante el análisis de firmas profundas de Capa 7, se desplegó el perfil `AC_LAN_Corporativo` para interceptar y denegar de forma heurística el tráfico de las categorías **Social.Media** (firmas de Facebook, Instagram, TikTok) y herramientas **P2P** (descargas BitTorrent), previniendo la fuga de información y el abuso del canal de datos.
 
-![Perfil Application Control](images/perfil_apps.png)
+![Perfil Application Control](images/perfil_apps.jpg)
 
 ### 🔗 Vinculación y Motores de Inspección en la Política
 Ambos escudos de seguridad fueron acoplados directamente dentro de la política de firewall principal. Para asegurar la continuidad del laboratorio sin alteración de llaves criptográficas en esta etapa, se asoció el método de inspección en modo **Certificate Inspection**:
 
-![Política NGFW Acoplada](images/politica_ngfw.png)
+![Política NGFW Acoplada](images/politica_ngfw.jpg)
 
 ---
 
