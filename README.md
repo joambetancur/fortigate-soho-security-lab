@@ -205,7 +205,7 @@ Se modificó la política de control de acceso a internet para alternar el anál
 
 Para verificar que el firewall está procesando las solicitudes de seguridad y comunicándose con FortiGuard para el análisis de firmas, se ejecutó un sniffer de paquetes en tiempo real:
 
-![Log Trafico Lab 3](images/log_lab3.jpg)
+![Log Trafico Lab 3](images/log_sniffer.jpg)
 
 ---
 
