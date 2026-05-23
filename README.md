@@ -207,8 +207,6 @@ Para verificar que el firewall está procesando las solicitudes de seguridad y c
 
 ![Log Trafico Lab 3](images/log_lab3.jpg)
 
-![Logs de Tráfico Local](images/logs_trafico_local.jpg) 
-
 ---
 
 ## 📌 Conclusiones del Laboratorio 3
