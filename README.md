@@ -178,6 +178,10 @@ Ambos escudos de seguridad fueron acoplados directamente dentro de la política 
 
 ![Política NGFW Acoplada](images/politica_ngfw.jpg)
 
+## 📌 Conclusiones del Laboratorio 2
+* **Seguridad de Capa 7:** La activación de perfiles UTM demuestra que el firewall ya no solo inspecciona IPs y puertos (Capas 3 y 4), sino que analiza el comportamiento real del tráfico y el contenido de las peticiones.
+* **Mitigación del Riesgo:** El bloqueo preventivo de categorías de reputación no deseada disminuye la superficie de ataque de la red SOHO de manera drástica, aislando los endpoints de servidores de comando y control (C2) o sitios de phishing conocidos.
+
 ---
 
 ## 🔍 Laboratorio 3: Inspección SSL/TLS Profunda (Deep SSL Inspection) y AntiVirus Perimetral
@@ -188,13 +192,14 @@ Este laboratorio aborda la eliminación del "punto ciego" del tráfico corporati
 ### ⚙️ Configuración del Motor de Inspección y Seguridad
 
 #### 1. Perfil Antivirus Corporativo en Modo Proxy
-Se configuró el perfil `AV-LAN-Corporativo` bajo un conjunto de funciones basadas en **Proxy (Proxy-based)**. Este modo es un requisito de diseño de FortiOS para realizar un análisis heurístico completo de archivos pesados sobre los protocolos estándar de transferencia (`HTTP`, `FTP`, `CIFS`, etc.), garantizando la interrupción y el bloqueo de binarios sospechosos o firmas de malware conocidas.
+Se configuró el perfil `default` bajo un conjunto de funciones basadas en **Proxy (Proxy-based)**. Este modo es un requisito de diseño de FortiOS para realizar un análisis completo de archivos pesados sobre los protocolos estándar de transferencia (`HTTP`, `FTP`, `CIFS`, etc.), garantizando la interrupción y el bloqueo de binarios sospechosos o firmas de malware conocidas.
 
-![Configuración Perfil Antivirus](images/perfil_apps.jpg) 
-*(Nota: Reemplaza con el nombre con el que guardes tu captura del AV corregido)*
+![Configuración Perfil Antivirus](images/perfil_av.jpg) 
 
 #### 2. Despliegue de Deep Inspection en la Política Perimetral
 Se modificó la política de control de acceso a internet para alternar el análisis superficial de certificados por el perfil de **Deep Inspection**. Al acoplar el descifrado SSL junto al motor de AntiVirus, el NGFW adquiere visibilidad total sobre la Capa 7 profunda, analizando el payload de las conexiones TLS dirigidas a dominios permitidos.
+
+![Configuración Deep Inspection](images/politica_deep_inspection.jpg)
 
 #### 3. Auditoría y Análisis de Tráfico Local
 Como parte del aseguramiento del sistema operativo de FortiOS, se validó el comportamiento del módulo de auditoría de tráfico. En la consola gráfica se evidencia el registro preciso de las conexiones internas (**Local Traffic**), mapeando de forma detallada los handshakes del sistema, consultas de resolución de nombres (DNS) y peticiones HTTPS de control perimetral.
@@ -207,7 +212,3 @@ Como parte del aseguramiento del sistema operativo de FortiOS, se validó el com
 ## 📌 Conclusiones del Laboratorio 3
 * **Eliminación del Punto Ciego HTTPS:** Sin la inspección profunda (`deep-inspection`), los perfiles de seguridad como el Web Filter o el AntiVirus quedan completamente ciegos ante ataques modernos que utilizan canales HTTPS cifrados para distribuir malware.
 * **Consideraciones de Producción (Justificación de Ingeniería):** Debido a que el firewall genera certificados dinámicos firmados por su propia CA interna (`Fortinet_CA_SSL`), en un entorno empresarial real es mandatorio distribuir este certificado de manera masiva en el almacén de confianza de los hosts mediante Políticas de Grupo (GPO) de Active Directory o herramientas MDM, evitando así alertas de seguridad en los navegadores de los usuarios.
-
-## 📌 Conclusiones del Laboratorio 2
-* **Seguridad de Capa 7:** La activación de perfiles UTM demuestra que el firewall ya no solo inspecciona IPs y puertos (Capas 3 y 4), sino que analiza el comportamiento real del tráfico y el contenido de las peticiones.
-* **Mitigación del Riesgo:** El bloqueo preventivo de categorías de reputación no deseada disminuye la superficie de ataque de la red SOHO de manera drástica, aislando los endpoints de servidores de comando y control (C2) o sitios de phishing conocidos.
