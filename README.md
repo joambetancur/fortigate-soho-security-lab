@@ -201,11 +201,13 @@ Se modificó la política de control de acceso a internet para alternar el anál
 
 ![Configuración Deep Inspection](images/politica_deep_inspection.jpg)
 
-#### 3. Auditoría y Análisis de Tráfico Local
-Como parte del aseguramiento del sistema operativo de FortiOS, se validó el comportamiento del módulo de auditoría de tráfico. En la consola gráfica se evidencia el registro preciso de las conexiones internas (**Local Traffic**), mapeando de forma detallada los handshakes del sistema, consultas de resolución de nombres (DNS) y peticiones HTTPS de control perimetral.
+### Evidencia de Inspección Activa vía CLI (Sniffer)
+
+Para verificar que el firewall está procesando las solicitudes de seguridad y comunicándose con FortiGuard para el análisis de firmas, se ejecutó un sniffer de paquetes en tiempo real:
+
+![Log Trafico Lab 3](images/log_lab3.jpg)
 
 ![Logs de Tráfico Local](images/logs_trafico_local.jpg) 
-*(Nota: Aquí puedes enlazar tu captura del Local Traffic)*
 
 ---
 
