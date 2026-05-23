@@ -211,4 +211,4 @@ Para verificar que el firewall está procesando las solicitudes de seguridad y c
 
 ## 📌 Conclusiones del Laboratorio 3
 * **Eliminación del Punto Ciego HTTPS:** Sin la inspección profunda (`deep-inspection`), los perfiles de seguridad como el Web Filter o el AntiVirus quedan completamente ciegos ante ataques modernos que utilizan canales HTTPS cifrados para distribuir malware.
-* **Consideraciones de Producción (Justificación de Ingeniería):** Debido a que el firewall genera certificados dinámicos firmados por su propia CA interna (`Fortinet_CA_SSL`), en un entorno empresarial real es mandatorio distribuir este certificado de manera masiva en el almacén de confianza de los hosts mediante Políticas de Grupo (GPO) de Active Directory o herramientas MDM, evitando así alertas de seguridad en los navegadores de los usuarios.
+* **Consideraciones de Producción:** Debido a que el firewall genera certificados dinámicos firmados por su propia CA interna (`Fortinet_CA_SSL`), en un entorno empresarial real es obligatorio distribuir este certificado de manera masiva en todos los dispositivos.
