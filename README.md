@@ -299,6 +299,8 @@ La regla perimetral se reconstruyó en la sección *Firewall Policy*, enlazando 
   * **Web Filter:** `WF_LAN_Corporativo`
   * **Application Control:** `AC_LAN_Corporativo`
   * **Antivirus:** `AV-LAN-Corporativo` (Modo Proxy)
+ 
+![Politica SD-WAN](images/firewall_policy_sdwan.jpg)
 
 ---
 
