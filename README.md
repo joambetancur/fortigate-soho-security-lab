@@ -1,7 +1,7 @@
 # Laboratorio Fortinet FCA: Implementación de Topología SOHO Segura con FortiGate VM
 
 ## 📝 Descripción del Proyecto
-Este laboratorio práctico demuestra el despliegue y la configuración de un Firewall de Nueva Generación (NGFW) **FortiGate VM** en un entorno simulado de oficina pequeña o contingencia doméstica (SOHO). El objetivo principal es aplicar los conceptos fundamentales del nivel **Fortinet Certified Associate (FCA)**, garantizando la segmentación estricta de la red, control de acceso perimetral, traducción de direcciones de red (NAT) y la exposición segura de servicios críticos en una Zona Desmilitarizada (DMZ).
+Este laboratorio práctico muestra el despliegue y la configuración de un Firewall de Nueva Generación (NGFW) **FortiGate VM** en un entorno simulado de oficina pequeña o hogareña (SOHO). El objetivo principal es aplicar los conceptos fundamentales del nivel **Fortinet Certified Associate (FCA)**, garantizando la segmentación de la red, control de acceso perimetral, traducción de direcciones de red (NAT) y la exposición segura de servicios críticos en una Zona Desmilitarizada (DMZ).
 
 ---
 
@@ -143,23 +143,23 @@ end
 📊 Verificación y Resultados (Evidencias): Todo queda registrado en la carpeta **images**:
 
 #### A. Tabla de Políticas de Seguridad (GUI)
-A continuación se muestra la correcta jerarquía y estado de las políticas configuradas desde el entorno gráfico de FortiOS:
+A continuación se muestra la correcta jerarquía y estado de las políticas configuradas:
 ![Tabla de Politicas](images/politics1.jpg)
 ![Tabla de Politicas](images/politics2.jpg)
 
 #### B. Monitoreo de Logs y Tráfico mediante CLI (Local Traffic)
-*Nota de ingeniería: Debido a limitaciones de hardware para desplegar hosts finales en el hipervisor, las pruebas de conectividad se originaron directamente desde la CLI de FortiOS forzando las IPs de las interfaces como origen (`ping-options source`). Por arquitectura del sistema operativo, estas trazas se auditan bajo el módulo **Local Traffic**, demostrando el correcto enrutamiento y la aplicación de las políticas perimetrales:*
 ![Registro del Trafico](images/log_traffic.jpg)
 
 📌 Conclusiones del Laboratorio 1:
-Control Perimetral: El uso de las políticas NGFW segmentó exitosamente la red, impidiendo la comunicación directa no deseada entre la zona de usuarios y la zona de servidores.
+* **Control Perimetral: El uso de las políticas NGFW segmentó exitosamente la red, impidiendo la comunicación directa no deseada entre la zona de usuarios y la zona de servidores.
+* **Seguridad DMZ: Al utilizar una IP Virtual (VIP), se expone únicamente el puerto específico necesario (TCP 80) hacia internet, ocultando por completo el direccionamiento IP real de la infraestructura interna de ataques de escaneo.
 
-Seguridad DMZ: Al utilizar una IP Virtual (VIP), se expone únicamente el puerto específico necesario (TCP 80) hacia internet, ocultando por completo el direccionamiento IP real de la infraestructura interna de ataques de escaneo.
+---
 
 ## 🛡️ Laboratorio 2: Perfiles de Seguridad y Control de Aplicaciones (NGFW)
 
 ### 📝 Descripción
-En esta fase se transformó el firewall perimetral básico en un **Firewall de Nueva Generación (NGFW)** mediante la implementación de inspección de Capa 7. El objetivo fue aplicar el principio de menor privilegio sobre la regla de salida a Internet (`Permitir_LAN_a_Internet`), restringiendo el acceso a categorías web de alto riesgo y controlando el uso de aplicaciones que comprometen la productividad y el ancho de banda.
+En esta fase se transformó el firewall perimetral básico en un **Firewall de Nueva Generación (NGFW)** mediante la implementación de inspección de Capa 7. El objetivo fue aplicar el principio de menor privilegio sobre la regla de salida a Internet (`Permitir_LAN_a_Internet`), restringiendo el acceso a categorías web de riesgo y controlando el uso de aplicaciones que comprometen la productividad y el ancho de banda.
 
 ### ⚙️ Configuración de Perfiles UTM (Arquitectura)
 
@@ -169,18 +169,18 @@ Se creó el perfil personalizado `WF_LAN_Corporativo` bajo la base de datos de *
 ![Perfil Web Filter](images/perfil_web.jpg)
 
 #### 2. Control de Aplicaciones (Application Control)
-Mediante el análisis de firmas profundas de Capa 7, se desplegó el perfil `AC_LAN_Corporativo` para interceptar y denegar de forma heurística el tráfico de las categorías **Social.Media** (firmas de Facebook, Instagram, TikTok) y herramientas **P2P** (descargas BitTorrent), previniendo la fuga de información y el abuso del canal de datos.
+Mediante el análisis de firmas profundas de Capa 7, se desplegó el perfil `AC_LAN_Corporativo` para denegar de forma el tráfico de las categorías **Social.Media** (firmas de Facebook, Instagram, TikTok) y herramientas **P2P** (descargas BitTorrent), previniendo la fuga de información y el abuso del canal de datos.
 
 ![Perfil Application Control](images/perfil_apps.jpg)
 
 ### 🔗 Vinculación y Motores de Inspección en la Política
-Ambos escudos de seguridad fueron acoplados directamente dentro de la política de firewall principal. Para asegurar la continuidad del laboratorio sin alteración de llaves criptográficas en esta etapa, se asoció el método de inspección en modo **Certificate Inspection**:
+Ambos escudos de seguridad fueron puestos directamente dentro de la política de firewall principal. Para asegurar la continuidad del laboratorio, se asoció el método de inspección en modo **Certificate Inspection**:
 
 ![Política NGFW Acoplada](images/politica_ngfw.jpg)
 
 ## 📌 Conclusiones del Laboratorio 2
-* **Seguridad de Capa 7:** La activación de perfiles UTM demuestra que el firewall ya no solo inspecciona IPs y puertos (Capas 3 y 4), sino que analiza el comportamiento real del tráfico y el contenido de las peticiones.
-* **Mitigación del Riesgo:** El bloqueo preventivo de categorías de reputación no deseada disminuye la superficie de ataque de la red SOHO de manera drástica, aislando los endpoints de servidores de comando y control (C2) o sitios de phishing conocidos.
+* **Seguridad de Capa 7:** La activación de perfiles de seguridad demuestra que el firewall ya no solo inspecciona IPs y puertos (Capas 3 y 4), sino que analiza el comportamiento real del tráfico y el contenido de las peticiones.
+* **Mitigación del Riesgo:** El bloqueo preventivo de categorías de reputación no deseada disminuye la superficie de ataque de la red SOHO de manera drástica, aislando los endpoints y los sitios de phishing conocidos.
 
 ---
 
@@ -192,12 +192,12 @@ Este laboratorio aborda la eliminación del "punto ciego" del tráfico corporati
 ### ⚙️ Configuración del Motor de Inspección y Seguridad
 
 #### 1. Perfil Antivirus Corporativo en Modo Proxy
-Se configuró el perfil `default` bajo un conjunto de funciones basadas en **Proxy (Proxy-based)**. Este modo es un requisito de diseño de FortiOS para realizar un análisis completo de archivos pesados sobre los protocolos estándar de transferencia (`HTTP`, `FTP`, `CIFS`, etc.), garantizando la interrupción y el bloqueo de binarios sospechosos o firmas de malware conocidas.
+Se configuró el perfil `default` bajo un conjunto de funciones basadas en **Proxy (Proxy-based)**. Este modo es un requisito de diseño de FortiOS para realizar un análisis completo de archivos sobre los protocolos estándar de transferencia (`HTTP`, `FTP`, `CIFS`, etc.), garantizando la interrupción y el bloqueo de paquetes sospechosos o firmas de malware conocidas.
 
 ![Configuración Perfil Antivirus](images/perfil_av.jpg) 
 
 #### 2. Despliegue de Deep Inspection en la Política Perimetral
-Se modificó la política de control de acceso a internet para alternar el análisis superficial de certificados por el perfil de **Deep Inspection**. Al acoplar el descifrado SSL junto al motor de AntiVirus, el NGFW adquiere visibilidad total sobre la Capa 7 profunda, analizando el payload de las conexiones TLS dirigidas a dominios permitidos.
+Se modificó la política de control de acceso a internet para alternar el análisis superficial de certificados por el perfil de **Deep Inspection**. Al acoplar el descifrado SSL junto al motor de AntiVirus, el NGFW adquiere visibilidad total sobre la Capa 7.
 
 ![Configuración Deep Inspection](images/politica_deep_inspection.jpg)
 
@@ -212,3 +212,91 @@ Para verificar que el firewall está procesando las solicitudes de seguridad y c
 ## 📌 Conclusiones del Laboratorio 3
 * **Eliminación del Punto Ciego HTTPS:** Sin la inspección profunda (`deep-inspection`), los perfiles de seguridad como el Web Filter o el AntiVirus quedan completamente ciegos ante ataques modernos que utilizan canales HTTPS cifrados para distribuir malware.
 * **Consideraciones de Producción:** Debido a que el firewall genera certificados dinámicos firmados por su propia CA interna (`Fortinet_CA_SSL`), en un entorno empresarial real es obligatorio distribuir este certificado de manera masiva en todos los dispositivos.
+
+---
+
+## 🌐 Laboratorio 4: Alta Disponibilidad Perimetral y Resiliencia SOHO mediante SD-WAN
+
+### 📝 Descripción y Restricciones del Entorno
+
+En esta fase se aborda la continuidad de la red y la tolerancia a fallos en la red. El objetivo principal es migrar la topología SOHO desde un esquema estático con un único proveedor de Internet hacia una arquitectura altamente disponible con doble enlace gestionada de forma dinámica por el motor de **SD-WAN** de FortiOS.
+
+#### ⚠️ Notas de Implementación en Licencia de Evaluación (FortiOS v8.x Trial)
+Durante el despliegue en el entorno de evaluación, se identificaron dos restricciones críticas del sistema operativo sin licencia comercial:
+1. **Límite de Interfaces Lógicas (VLANs):** FortiOS en modo *prueba* restringe la creación de subinterfaces virtuales mediante el mensaje `Maximum number of entries has been reached`. Esto impidió fragmentar el `port1`.
+2. **Retención de Referencias de Hardware:** Las interfaces físicas de fábrica mantienen dependencias implícitas en la base de datos del sistema (tablas de enrutamiento, asignaciones DNS e hilos del servidor DHCP). Para asociar los puertos físicos a la zona virtual, se requiere una purga total de políticas y rutas.
+
+**Solución Arquitectónica:** Se procedió a reestructurar la topología física reutilizando los recursos permitidos por la licencia de evaluación. Se sacrificó temporalmente el segmento físico de la DMZ (`port3`) para reconvertir dicho puerto en el **segundo enlace WAN (ISP de Respaldo)**.
+
+---
+
+### 🗺️ Topología Lógica Reconfigurada (SD-WAN)
+
+                [ ISP 1 - Principal ]    [ ISP 2 - Respaldo ]
+                            \                    /
+                       (WAN - Port 1)       (WAN - Port 3)
+                            +------------------+
+                            |   ZONA SD-WAN    |
+                            |(virtual-wan-link)|
+                            +------------------+
+                                     |
+                               +-----------+
+                               | FortiGate |
+                               |    VM     |
+                               +-----------+
+                                     |
+                                  (Port 2)
+                                     |
+                              [ Usuarios LAN ]
+
+---
+
+### ⚙️ Configuración del Flujo de Trabajo
+
+#### 1. Purga de Dependencias y Reasignación de Roles
+* **Eliminación de Políticas:** Se eliminaron las reglas anteriores en *Policy & Objects > Firewall Policy* para romper el bloqueo de referencias sobre el `port1` y el `port3`.
+* **Reconfiguración de Puerto 3:** En *Network > Interfaces*, se editó el `port3`:
+  * Se desactivó el servidor DHCP interno.
+  * Se cambió el **Role** de *DMZ* a **WAN**.
+  * Se configuró el **Addressing Mode** en **DHCP**.
+  * Se habilitó el acceso administrativo **PING** para permitir sondeos.
+
+#### 2. Orquestación de la Zona Virtual SD-WAN
+* En *Network > SD-WAN > SD-WAN Zones*, se editó el contenedor virtual predeterminado **`virtual-wan-link`**.
+* Se agregaron con éxito el **`port1`** y el **`port3`** como miembros activos de la zona virtual.
+
+#### 3. Abstracción del Enrutamiento Estático
+Se eliminó la antigua ruta estática hacia el `port1`. En su lugar, se creó una directiva global única en *Network > Static Routes*:
+* **Destination:** `0.0.0.0/0.0.0.0`
+* **Interface:** `virtual-wan-link`
+
+---
+
+### 📊 Políticas de Calidad y Conmutación por Error
+
+Se implementó un mecanismo de monitorización continua en la pestaña **Performance SLA** para auditar el estado de los enlaces mediante sondas ICMP:
+* **Sonda de Salud (`SLA_Google_DNS`):** Configurada hacia el DNS público `8.8.8.8` con los participantes de la zona SD-WAN en modo activo.
+* **Regla de Tráfico (SD-WAN Rule):** Se creó la regla de negocio `Estrategia_SOHO_Failover` utilizando la estrategia **Manual / Priority**. La regla fuerza de manera determinista al tráfico LAN a salir por el **`port1` (ISP Principal)** siempre y cuando cumpla con los umbrales de SLA. Si ocurre un *Blackout* (caída total) del proveedor principal, el FortiGate conmuta las sesiones de forma transparente hacia el **`port3` (ISP de Respaldo)**.
+
+---
+
+### 🔒 Refactorización de la Política de Control de Acceso (NGFW)
+
+La regla perimetral se reconstruyó en la sección *Firewall Policy*, enlazando los perfiles de seguridad de Capa 7 desarrollados en los laboratorios anteriores sobre la nueva interfaz virtual:
+
+* **Name:** `Permitir_LAN_a_Internet_SDWAN`
+* **Incoming Interface:** `port2` (LAN_Users)
+* **Outgoing Interface:** `virtual-wan-link` (Zona SD-WAN)
+* **Source / Destination / Service:** `all` / `all` / `ALL`
+* **NAT:** `Enabled`
+* **Security Profiles Incorporados:** 
+  * **Web Filter:** `WF_LAN_Corporativo`
+  * **Application Control:** `AC_LAN_Corporativo`
+  * **Antivirus:** `AV-LAN-Corporativo` (Modo Proxy)
+
+---
+
+### 📌 Conclusiones del Laboratorio 4
+
+* **Aislamiento de la Capa de Aplicación:** Al pasar las políticas NGFW hacia una zona abstracta (`virtual-wan-link`), los cambios físicos de los proveedores de Internet se vuelven completamente agnósticos para las reglas de seguridad. Modificar o escalar ISPs no requiere rehacer las políticas de cortafuegos de la organización.
+* **Resiliencia Determinista:** El failover automático basado en Performance SLA mitiga las interrupciones del negocio en entornos SOHO/Teletrabajo crítico, permitiendo la continuidad del tráfico LAN frente a incidentes en el enlace principal.
