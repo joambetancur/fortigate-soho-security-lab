@@ -260,15 +260,21 @@ Durante el despliegue en el entorno de evaluación, se identificaron dos restric
   * Se cambió el **Role** de *DMZ* a **WAN**.
   * Se configuró el **Addressing Mode** en **DHCP**.
   * Se habilitó el acceso administrativo **PING** para permitir sondeos.
+ 
+![Nuevas Interfaces](images/new_interfaces.jpg)
 
 #### 2. Orquestación de la Zona Virtual SD-WAN
 * En *Network > SD-WAN > SD-WAN Zones*, se editó el contenedor virtual predeterminado **`virtual-wan-link`**.
 * Se agregaron con éxito el **`port1`** y el **`port3`** como miembros activos de la zona virtual.
 
+![SD-WAN](images/SD-WAN.jpg)
+
 #### 3. Abstracción del Enrutamiento Estático
 Se eliminó la antigua ruta estática hacia el `port1`. En su lugar, se creó una directiva global única en *Network > Static Routes*:
 * **Destination:** `0.0.0.0/0.0.0.0`
 * **Interface:** `virtual-wan-link`
+
+![Enrutamiento estatico nuevo](images/new_static_route.jpg)
 
 ---
 
