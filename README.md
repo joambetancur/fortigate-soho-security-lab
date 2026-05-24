@@ -272,11 +272,11 @@ Se eliminó la antigua ruta estática hacia el `port1`. En su lugar, se creó un
 
 ---
 
-### 📊 Políticas de Calidad y Conmutación por Error
+### 📊 Monitoreo de los enlaces y cambio automático en caso de fallas
 
-Se implementó un mecanismo de monitorización continua en la pestaña **Performance SLA** para auditar el estado de los enlaces mediante sondas ICMP:
-* **Sonda de Salud (`SLA_Google_DNS`):** Configurada hacia el DNS público `8.8.8.8` con los participantes de la zona SD-WAN en modo activo.
-* **Regla de Tráfico (SD-WAN Rule):** Se creó la regla de negocio `Estrategia_SOHO_Failover` utilizando la estrategia **Manual / Priority**. La regla fuerza de manera determinista al tráfico LAN a salir por el **`port1` (ISP Principal)** siempre y cuando cumpla con los umbrales de SLA. Si ocurre un *Blackout* (caída total) del proveedor principal, el FortiGate conmuta las sesiones de forma transparente hacia el **`port3` (ISP de Respaldo)**.
+Para estar seguros de que el Internet nunca falle, se puso al FortiGate a revisar las dos conexiones todo el tiempo:
+* **Prueba de conexión (SLA_Google_DNS):** El firewall se la pasa mandándole "pings" (señales de prueba) al servidor de Google (8.8.8.8) a través de ambos puertos. Así mide en tiempo real qué tan rápido responden y si se están perdiendo datos en el camino.
+* **Regla de cambio automático (SD-WAN Rule):** Creamos una regla que dice que la prioridad número uno siempre la va a tener el port1 (nuestro Internet principal). Mientras esa conexión esté sana y responda bien las pruebas, toda la red de los usuarios (port2) saldrá por ahí. Pero, si el Internet principal se cae por completo o se pone muy inestable, el FortiGate pasa todo el tráfico al port3 (el Internet de respaldo) de forma automática. De esta manera, los usuarios no se enteran del daño y nunca se quedan sin señal.
 
 ---
 
@@ -298,5 +298,5 @@ La regla perimetral se reconstruyó en la sección *Firewall Policy*, enlazando 
 
 ### 📌 Conclusiones del Laboratorio 4
 
-* **Aislamiento de la Capa de Aplicación:** Al pasar las políticas NGFW hacia una zona abstracta (`virtual-wan-link`), los cambios físicos de los proveedores de Internet se vuelven completamente agnósticos para las reglas de seguridad. Modificar o escalar ISPs no requiere rehacer las políticas de cortafuegos de la organización.
-* **Resiliencia Determinista:** El failover automático basado en Performance SLA mitiga las interrupciones del negocio en entornos SOHO/Teletrabajo crítico, permitiendo la continuidad del tráfico LAN frente a incidentes en el enlace principal.
+* **Seguridad independiente de los cables:** Al conectar nuestras reglas de seguridad (como el filtro web y el antivirus) directamente a la zona de SD-WAN y no a un puerto físico, logramos que la seguridad no dependa de los proveedores. Si el día de mañana la empresa cambia de operador de Internet o contrata uno nuevo, no tenemos que volver a programar ninguna política de seguridad desde cero; el firewall sigue protegiendo todo automáticamente.
+* **Internet garantizado para los usuarios:** Configurar este cambio automático basado en pruebas de "ping" reales asegura que la red nunca se quede incomunicada. Para entornos de teletrabajo o pequeñas oficinas, esto es un salvavidas, porque si el Internet principal falla, el equipo salta al de respaldo tan rápido que los usuarios ni se dan cuenta y pueden seguir trabajando sin interrupciones.
