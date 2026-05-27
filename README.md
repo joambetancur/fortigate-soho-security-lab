@@ -1,7 +1,8 @@
 # Laboratorio Fortinet FCA: Implementación de Topología SOHO Segura con FortiGate VM
 
 ## 📝 Descripción del Proyecto
-Este laboratorio práctico muestra el despliegue y la configuración de un Firewall de Nueva Generación (NGFW) **FortiGate VM** en un entorno simulado de oficina pequeña o hogareña (SOHO). El objetivo principal es aplicar los conceptos fundamentales del nivel **Fortinet Certified Associate (FCA)**, garantizando la segmentación de la red, control de acceso perimetral, traducción de direcciones de red (NAT) y la exposición segura de servicios críticos en una Zona Desmilitarizada (DMZ).
+"Diseño e implementación de un laboratorio de seguridad perimetral orientado a entornos de sucursales operativas y oficinas conectadas, alineado con los requerimientos técnicos de las credenciales FCA y FCP de Fortinet.
+El proyecto demuestra la capacidad de desplegar continuidad de negocio y optimización de tráfico mediante SD-WAN con monitoreo de calidad de enlaces (Performance SLA), garantizando la conmutación por error (failover) de cara a internet. Asimismo, implementa seguridad avanzada en Capa 7, protegiendo la red interna mediante Inspección SSL Profunda (Deep Inspection), Filtro Web y Control de Aplicaciones para mitigar vectores de ataque modernos sin depender de infraestructuras centrales complejas."
 
 ---
 
