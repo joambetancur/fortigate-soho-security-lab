@@ -1,8 +1,9 @@
 # Laboratorio Fortinet FCA: Implementación de Topología SOHO Segura con FortiGate VM
 
 ## 📝 Descripción del Proyecto
-"Diseño e implementación de un laboratorio de seguridad perimetral orientado a entornos de sucursales operativas y oficinas conectadas, alineado con los requerimientos técnicos de las credenciales FCA y FCP de Fortinet.
-El proyecto demuestra la capacidad de desplegar continuidad de negocio y optimización de tráfico mediante SD-WAN con monitoreo de calidad de enlaces (Performance SLA), garantizando la conmutación por error (failover) de cara a internet. Asimismo, implementa seguridad avanzada en Capa 7, protegiendo la red interna mediante Inspección SSL Profunda (Deep Inspection), Filtro Web y Control de Aplicaciones para mitigar vectores de ataque modernos sin depender de infraestructuras centrales complejas."
+Este laboratorio práctico presenta el codiseño, despliegue y documentación de una arquitectura de seguridad perimetral y conectividad resiliente para Sucursales Conectadas (Secure Edge / Branch) utilizando una máquina virtual FortiGate VM (FortiOS v8.x).
+
+A diferencia de los enfoques tradicionales basados únicamente en filtrado de Capas 3 y 4, este proyecto implementa políticas avanzadas de Capa 7 (NGFW) y mecanismos de alta disponibilidad lógica mediante SD-WAN. El diseño está minuciosamente estructurado y alineado con los objetivos técnicos y de arquitectura de las credenciales Fortinet Certified Associate (FCA) y Fortinet Certified Professional (FCP) en Secure Networking.
 
 ---
 
